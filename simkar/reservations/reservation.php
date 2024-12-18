@@ -135,14 +135,18 @@ $reservations = $stmt->fetchAll();
                 <a href="reservation.php" class="active">Reservations</a>
                 <a href="../vehicles/vehicles.php">Vehicles</a>
                 <a href="../services/services.php">Services</a>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="../users/users.php" class="my-2">Users</a>
+                <?php endif; ?>
                 <a href="../reports/reports.php" class="my-2"><i class="fas fa-file-excel"></i>Report</a>
             </div>
 
             <!-- Main Content -->
             <div class="col-md-10 main-content">
                 <h2 class="my-4">Daftar Reservasi</h2>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="add_reservation.php" class="btn btn-primary mb-3">Tambah Reservasi Baru</a>
+                <?php endif; ?>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -155,7 +159,9 @@ $reservations = $stmt->fetchAll();
                             <?php if ($_SESSION['role'] === 'approver'): ?>
                                 <th>Detail</th>
                             <?php endif; ?>
-                            <th>Aksi</th>
+                            <?php if ($_SESSION['role'] === 'admin'): ?>
+                                <th>Aksi</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -176,11 +182,13 @@ $reservations = $stmt->fetchAll();
                                         data-id="<?= $reservation['id'] ?>">Summary
                                     </button>
                                 </td>
-                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php if ($_SESSION['role'] === 'admin'): ?>
                                 <td>
                                     <a href="edit_reservation.php?id=<?= $reservation['id'] ?>" class="btn btn-outline-primary btn-sm">Edit</a>
                                     <a href="delete_reservation.php?id=<?= $reservation['id'] ?>" class="btn btn-outline-danger btn-sm">Hapus</a>
                                 </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

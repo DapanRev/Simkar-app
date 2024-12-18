@@ -1,13 +1,30 @@
 <?php
 session_start();
 
-// Periksa apakah pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
-require 'config.php'; 
+require 'config.php';
+
+
+$stmt = $pdo->query("
+    SELECT DATE_FORMAT(start_date, '%M') AS month, COUNT(*) AS total
+    FROM reservations
+    WHERE status = 'Approved'
+    GROUP BY MONTH(start_date), DATE_FORMAT(start_date, '%M')
+    ORDER BY MONTH(start_date) ASC
+");
+
+$months = [];
+$totals = [];
+
+while ($row = $stmt->fetch()) {
+    $months[] = $row['month'];
+    $totals[] = $row['total'];
+}
+
 
 $stmt = $pdo->query("SELECT COUNT(*) AS total_vehicles FROM vehicles");
 $row = $stmt->fetch();
@@ -186,30 +203,39 @@ $total_services = $row['total_services'];
     </div>
 
     <!-- Scripts -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Example chart data
-        var ctx = document.getElementById('usageChart').getContext('2d');
-        var usageChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['January', 'February', 'March', 'April'],
-                datasets: [{
-                    label: 'Vehicle Usage',
-                    data: [10, 15, 20, 18],
-                    backgroundColor: '#1e88e5'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Data dari PHP
+    const months = <?= json_encode($months); ?>;  // Nama bulan
+    const totals = <?= json_encode($totals); ?>;  // Jumlah reservasi yang di-approve
+
+    // Inisialisasi chart
+    var ctx = document.getElementById('usageChart').getContext('2d');
+    var usageChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: months,  // Label nama bulan
+            datasets: [{
+                label: 'Approved Reservations per Month',
+                data: totals,  // Jumlah reservasi per bulan
+                backgroundColor: '#1e88e5',
+                borderColor: '#0d47a1',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
                     }
                 }
             }
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>

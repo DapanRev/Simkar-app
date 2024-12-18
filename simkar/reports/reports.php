@@ -149,7 +149,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a href="../reservations/reservation.php" class="my-2">Reservations</a>
                 <a href="../vehicles/vehicles.php" class="my-2">Vehicles</a>
                 <a href="../services/services.php" class="my-2">Services</a>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="../users/users.php" class="my-2">Users</a>
+                <?php endif; ?>
                 <a href="reports.php" class="my-2"><i class="fas fa-file-excel"></i>Report</a>
             </div>
 

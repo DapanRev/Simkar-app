@@ -88,14 +88,18 @@ $services = $stmt->fetchAll();
                 <a href="../reservations/reservation.php" class="my-2">Reservations</a>
                 <a href="../vehicles/vehicles.php" class="my-2">Vehicles</a>
                 <a href="../services/services.php" class="my-2">Services</a>
-                <a href="../users/users.php" class="my-2">Users</a>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
+                <a href="users/users.php" class="my-2">Users</a>
+                <?php endif; ?>
                 <a href="../reports/reports.php" class="my-2"><i class="fas fa-file-excel"></i>Report</a>
             </div>
 
             <!-- Main Content -->
             <div class="col-md-10">
                 <h2 class="my-4">Daftar Layanan Kendaraan</h2>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="add_service.php" class="btn btn-primary mb-3">Tambah Layanan Baru</a>
+                <?php endif; ?>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -104,7 +108,9 @@ $services = $stmt->fetchAll();
                             <th>Tanggal Layanan</th>
                             <th>Deskripsi</th>
                             <th>Biaya</th>
+                            <?php if ($_SESSION['role'] === 'admin'): ?>
                             <th>Aksi</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -115,10 +121,12 @@ $services = $stmt->fetchAll();
                                 <td><?= $service['service_date'] ?></td>
                                 <td><?= htmlspecialchars($service['description']) ?></td>
                                 <td>Rp <?= number_format($service['cost'], 2, ',', '.') ?></td>
+                                <?php if ($_SESSION['role'] === 'admin'): ?>
                                 <td>
                                     <a href="edit_service.php?id=<?= $service['id'] ?>" class="btn btn-outline-primary btn-sm">Edit</a>
                                     <a href="delete_service.php?id=<?= $service['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus layanan ini?')">Hapus</a>
                                 </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

@@ -86,14 +86,18 @@ $vehicles = $stmt->fetchAll();
                 <a href="../reservations/reservation.php" class="my-2">Reservations</a>
                 <a href="vehicles.php" class="my-2">Vehicles</a>
                 <a href="../services/services.php" class="my-2">Services</a>
-                <a href="../users/users.php" class="my-2">Users</a>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
+                <a href="users/users.php" class="my-2">Users</a>
+                <?php endif; ?>
                 <a href="../reports/reports.php" class="my-2"><i class="fas fa-file-excel"></i>Report</a>
             </div>
 
             <!-- Main Content -->
             <div class="col-md-10">
                 <h2 class="my-4">Daftar Kendaraan</h2>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="add_vehicle.php" class="btn btn-primary mb-3">Tambah Kendaraan Baru</a>
+                <?php endif; ?>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -102,7 +106,9 @@ $vehicles = $stmt->fetchAll();
                             <th>Nomor Plat</th>
                             <th>Jenis</th>
                             <th>Tipe BBM</th>
-                            <th>Aksi</th>
+                            <?php if ($_SESSION['role'] === 'admin'): ?>
+                                <th>Aksi</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -113,10 +119,12 @@ $vehicles = $stmt->fetchAll();
                                 <td><?= $vehicle['plate_number'] ?></td>
                                 <td><?= ucfirst(str_replace('_', ' ', $vehicle['type'])) ?></td>
                                 <td><?= ucfirst($vehicle['fuel_type']) ?></td>
+                                <?php if ($_SESSION['role'] === 'admin'): ?>
                                 <td>
                                     <a href="edit_vehicle.php?id=<?= $vehicle['id'] ?>" class="btn btn-outline-primary btn-sm">Edit</a>
                                     <a href="delete_vehicle.php?id=<?= $vehicle['id'] ?>" class="btn btn-outline-danger btn-sm">Hapus</a>
                                 </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
