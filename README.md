@@ -135,18 +135,12 @@ CREATE TABLE services (
 Berikut adalah daftar username dan password untuk role pengguna yang berbeda:
 
 ### **Administrator**
-- **Username**: admin
-- **Password**: admin123
+- **Username**: Tian
+- **Password**: admin
 
 ### **Approver**
-- **Username**: approver
-- **Password**: approver123
-
-### **User**
-- **Username**: user
-- **Password**: user123
-
-> **Catatan**: Anda dapat menambahkan lebih banyak pengguna melalui halaman manajemen user di dalam aplikasi.
+- **Username**: Steven / Sir V
+- **Password**: approver / easteregg
 
 ---
 
@@ -157,7 +151,6 @@ Berikut adalah daftar username dan password untuk role pengguna yang berbeda:
    - Role pengguna yang tersedia:
      - **Admin**: Mengelola semua data kendaraan, pemesanan, pengguna, dan laporan.
      - **Approver**: Menyetujui pemesanan kendaraan.
-     - **User**: Melakukan pemesanan kendaraan.
 
 ### 2. **Dashboard**
    - Setelah login, Anda akan diarahkan ke halaman dashboard yang menampilkan statistik:
@@ -168,7 +161,7 @@ Berikut adalah daftar username dan password untuk role pengguna yang berbeda:
 ### 3. **Manajemen Pemesanan Kendaraan**
    - Akses menu **Reservations** untuk melakukan pemesanan kendaraan baru.
    - Pilih kendaraan yang tersedia, atur tanggal mulai dan berakhir, lalu kirim pemesanan.
-   - Admin atau Approver dapat menyetujui atau menolak pemesanan yang masuk.
+   - Approver dapat menyetujui atau menolak pemesanan yang masuk.
 
 ### 4. **Manajemen Kendaraan**
    - Akses menu **Vehicles** untuk:
